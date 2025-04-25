@@ -961,27 +961,19 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/main.js"></script>
 	<script>
 		function addToCart(productName, price, imageURL) {
-			var cart = JSON.parse(localStorage.getItem('cart')) || [];
-	
-			// Check if the product already exists in the cart
-			var existingItem = cart.find(item => item.name === productName);
-	
-			if (!existingItem) {
-				cart.push({ name: productName, price: price, image: imageURL });
-				localStorage.setItem('cart', JSON.stringify(cart));
-			}
-	
-			// Prepare WhatsApp message with order details
-			var whatsappNumber = "+254771640984";
-			var orderMessage = `Hello, I would like to place an order.\n\nItems:\n`;
-	
-			cart.forEach((item, index) => {
-				orderMessage += `${index + 1}. ${item.name} - KES ${item.price}\nImage: ${item.image ? item.image : "No image available"}\n\n`;
-			});
-	
-			// Redirect to WhatsApp with order details
-			window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(orderMessage)}`, '_blank');
-		}
+    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Add to cart
+    cart.push({ name: productName, price: price, image: imageURL });
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Prepare WhatsApp message
+    var whatsappNumber = "+254771640984";
+    var message = `New Order:\n\nProduct: ${productName}\nPrice: KES ${price}\n\nView product image here: ${imageURL}`;
+    
+    // Open WhatsApp with message
+    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`, '_blank');
+}
 	</script>
 <script>
     function addToWishlist(productName, price, imageURL) {
